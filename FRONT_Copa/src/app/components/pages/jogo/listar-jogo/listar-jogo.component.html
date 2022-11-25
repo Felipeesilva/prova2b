@@ -2,5 +2,31 @@
   <mat-card-header>
     <mat-card-title> Listar Jogos </mat-card-title>
   </mat-card-header>
-  <mat-card-content> </mat-card-content>
+  <mat-card-content>
+    <table>
+      <tr>
+        <th>Seleção A</th>
+        <th>Placar </th>
+        <th>---------</th>
+        <th>Placar </th>
+        <th>Seleção B</th>
+        <th>Palpite</th>
+      </tr>
+
+      <tr *ngFor="let jogo of jogos">
+        <td>{{jogo.selecaoA?.nome}}</td>
+
+        <td>{{jogo.placar}}</td>
+
+        <td>------------------</td>
+        <td>{{jogo.placarB}}</td>
+
+        <td>{{jogo.selecaoB?.nome}}</td>
+
+        <td>
+          <button>Palpite</button>
+        </td>
+      </tr>
+    </table>
+  </mat-card-content>
 </mat-card>

@@ -16,33 +16,41 @@ export class CadastrarJogoComponent implements OnInit {
   selecaoB?: Selecao;
   selecoes!: Selecao[];
 
-
-
-
-  constructor(private http: HttpClient, private router: Router, private _snackBar: MatSnackBar) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
-    this.http.get<Selecao[]>("https://localhost:5001/api/selecao/listar").subscribe({
-      next: (selecoes) => {this.selecoes = selecoes;
-      },
-  });
-}
-
-cadastrar(): void {
-  let jogo: Jogo = {
-    id: this.id
-  };
-
-  this.http.post<Jogo>("https://localhost:5001/api/jogo/cadastrar", jogo).subscribe({
-    next: (jogo) => {
-      this._snackBar.open("Jogo cadastrado!", "Ok!", {
-        horizontalPosition: "right",
-        verticalPosition: "top",
+    this.http
+      .get<Selecao[]>("https://localhost:5001/api/selecao/listar")
+      .subscribe({
+        next: (selecoes) => {
+          this.selecoes = selecoes;
+        },
       });
-      this.router.navigate(["pages/jogo/listar"]);
-    },
-  });
+  }
 
-}
+  cadastrar(): void {
+    let jogo: Jogo = {
+      id: this.id,
+      selecaoA: this.selecaoA,
+      selecaoB: this.selecaoB,
+      placarB: undefined,
+      placar: undefined,
+    };
 
+    this.http
+      .post<Jogo>("https://localhost:5001/api/jogo/cadastrar", jogo)
+      .subscribe({
+        next: (jogo) => {
+          this._snackBar.open("Jogo cadastrado!", "Ok!", {
+            horizontalPosition: "right",
+            verticalPosition: "top",
+          });
+          this.router.navigate(["pages/jogo/listar"]);
+        },
+      });
+  }
 }
